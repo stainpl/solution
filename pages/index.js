@@ -1,114 +1,192 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+ import React, { useState, useEffect } from 'react';
+import Navbar from '../components/NavBar';
+import Footer from '../components/Footer';
+import AnimatedLine from '../components/AnimatedLine';
+import Typewriter from 'typewriter-effect';
+import DataCounter from '../components/DataCounter';
+import TeamCarousel from '../components/TeamCarousel';
+import GalleryAnimation from '../components/GalleryAnimation';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// Home Section with video background and typewriter text
+const HomeSection = () => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export default function Home() {
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <section id="home" className="relative h-screen w-full overflow-hidden bg-black">
+      {/* Video Background (only on client) */}
+      {mounted && (
+        <video 
+          className="absolute top-0 left-0 w-full h-full object-cover"
+          src="/video.mp4"  
+          autoPlay
+          loop
+          muted
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              pages/index.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+      )}
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black opacity-50"></div>
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full">
+        <div className="text-center text-white">
+          <h1 className="text-5xl font-bold mb-4">Welcome to Allpilar Solutions</h1>
+          <div className="text-2xl">
+            <Typewriter
+              options={{
+                strings: [
+                  "Let's build your dream.",
+                  "One Pilar solution.",
+                  "Innovative IT solutions.",
+                  "Transforming ideas into reality."
+                ],
+                autoStart: true,
+                loop: true,
+                delay: 75,
+              }}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+      <AnimatedLine />
+    </section>
+  );
+};
+
+// About Section with centered heading, sub-heading and two images with text below
+const AboutSection = () => {
+  return (
+    <section id="about" className="min-h-screen bg-gray-900 text-white py-20">
+      <div className="container mx-auto px-4 text-center">
+        <h2 className="text-4xl font-bold mb-4">About Us</h2>
+        <p className="text-xl mb-8">
+          We are an innovative IT solution provider focused on delivering high‑quality web development and creative digital solutions.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <img src="/about1.gif" alt="About 1" className="w-full rounded-lg" />
+            <p className="mt-2">Our mission is to innovate and inspire.</p>
+          </div>
+          <div>
+            <img src="/about2.gif" alt="About 2" className="w-full rounded-lg" />
+            <p className="mt-2">Our vision is to deliver excellence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Services Section with service cards, animated data counters, and team carousel
+const ServicesSection = () => {
+  const services = [
+    {
+      title: 'Web Development',
+      description: 'Building responsive and dynamic websites.',
+      imageSrc: './webdev.png'
+    },
+    {
+      title: 'Mobile Apps',
+      description: 'Creating intuitive mobile applications.',
+      imageSrc: '/appdev.png'
+    },
+    {
+      title: 'Cloud Solutions',
+      description: 'Deploying scalable cloud solutions.',
+      imageSrc: '/cloud.png'
+    },
+    {
+      title: 'Cyber Security',
+      description: 'Ensuring secure IT environments.',
+      imageSrc: '/cyber.png'
+    },
+  ];
+
+  const team = [
+    { name: 'Alice', title: 'Developer', image: '/team1.png' },
+    { name: 'Bob', title: 'Designer', image: '/team2.png' },
+    { name: 'Charlie', title: 'Project Manager', image: '/team3.png' },
+    { name: 'Diana', title: 'QA Specialist', image: '/team4.png' },
+  ];
+
+  return (
+    <section id="services" className="min-h-screen bg-gray-900 text-white py-20">
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl font-bold mb-8 text-center">Our Services</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {services.map((service, index) => (
+            <div key={index} className="bg-gray-800 text-white rounded-lg overflow-hidden shadow-lg">
+              <img src={service.imageSrc} alt={service.title} className="w-full h-48 object-cover" />
+              <div className="p-4">
+                <h3 className="text-xl font-bold mb-2">{service.title}</h3>
+                <p className="text-gray-400">{service.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Data Counters */}
+        <div className="mt-16 p-8 bg-gray-800 rounded-lg flex justify-around">
+          <DataCounter label="Happy Customers" targetCount={169} />
+          <DataCounter label="Projects" targetCount={200} />
+          <DataCounter label="Workers" targetCount={50} />
+        </div>
+        {/* Team Carousel */}
+        <div className="mt-16">
+          <h2 className="text-3xl font-bold mb-4 text-center">Meet Our Team</h2>
+          <TeamCarousel team={team} />
+        </div>
+      </div>
+      <AnimatedLine />
+    </section>
+  );
+};
+
+// Contact Section with a smart contact form
+const ContactSection = () => {
+  return (
+    <section id="contact" className="min-h-screen bg-gray-900 text-white py-20">
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl font-bold mb-4 text-center">Contact Us</h2>
+        <p className="text-center text-gray-400 mb-8">
+          Call us: <span className="font-bold">+123456789</span> | Email: <span className="font-bold">info@itsolution.com</span>
+        </p>
+        <form className="max-w-lg mx-auto bg-gray-800 p-8 rounded-lg shadow-md">
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-gray-300 mb-2">Name</label>
+            <input type="text" id="name" name="name" required className="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none" />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-gray-300 mb-2">Email</label>
+            <input type="email" id="email" name="email" required className="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none" />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="message" className="block text-gray-300 mb-2">Message</label>
+            <textarea id="message" name="message" required rows="4" className="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:outline-none"></textarea>
+          </div>
+          <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">
+            Send Message
+          </button>
+        </form>
+      </div>
+      <AnimatedLine />
+    </section>
+  );
+};
+
+const IndexPage = () => {
+  return (
+    <div className="scroll-smooth">
+      <Navbar />
+      <HomeSection />
+      <AboutSection />
+      <GalleryAnimation />
+      <ServicesSection />
+      <ContactSection />
+      <Footer />
     </div>
   );
-}
+};
+
+export default IndexPage;
+
